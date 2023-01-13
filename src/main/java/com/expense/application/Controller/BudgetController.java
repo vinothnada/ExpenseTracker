@@ -14,23 +14,23 @@ public class BudgetController {
         return budgetDataList;
     }
 
-    public String createItem(BudgetData BudgetData){
+    public String createItem(BudgetData budgetData){
         if(budgetDataList.size() == 0 ){
-            BudgetData.setId(1);
+            budgetData.setId(1);
         }else{
             BudgetData bs = budgetDataList.get(budgetDataList.size() - 1);
-            BudgetData.setId(bs.getId() + 1);
+            budgetData.setId(bs.getId() + 1);
         }
-        budgetDataList.add(BudgetData);
+        budgetDataList.add(budgetData);
         return "BudgetData Created Successfully";
     }
 
-    public String editItem(int itemId, BudgetData BudgetData){
+    public String editItem(int itemId, BudgetData budgetData){
         BudgetData bDataItem = budgetDataList.stream().filter(a -> a.getId() == itemId).collect(Collectors.toList()).get(0);
         budgetDataList.removeIf(e -> e.getId() == itemId);
-        bDataItem.setBudgetSetup(BudgetData.getBudgetSetup());
-        bDataItem.setAmount(BudgetData.getAmount());
-        bDataItem.setCategory(BudgetData.getCategory());
+        bDataItem.setBudgetSetup(budgetData.getBudgetSetup());
+        bDataItem.setAmount(budgetData.getAmount());
+        bDataItem.setCategory(budgetData.getCategory());
         budgetDataList.add(bDataItem);
         return "BudgetData updated Successfully";
     }

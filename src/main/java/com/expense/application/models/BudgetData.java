@@ -9,6 +9,12 @@ public class BudgetData {
     public BudgetData() {
     }
 
+    public BudgetData(BudgetSetup budgetSetup, Category category, double amount) {
+        this.budgetSetup = budgetSetup;
+        this.category = category;
+        this.amount = amount;
+    }
+
     public BudgetData(int id, BudgetSetup budgetSetup, Category category, double amount) {
         this.id = id;
         this.budgetSetup = budgetSetup;

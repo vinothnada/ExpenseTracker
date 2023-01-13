@@ -1,21 +1,32 @@
 package com.expense.application.models;
 
+import com.expense.application.models.enums.TransactionType;
+
+import java.util.Date;
+
 public class Transaction {
     private int id;
-    private User user;
     private Category category;
     private double amount;
     private TransactionType transactionType;
+    private Date trasactionDate;
 
     public Transaction() {
     }
 
-    public Transaction(int id, User user, Category category, double amount, TransactionType transactionType) {
-        this.id = id;
-        this.user = user;
+    public Transaction(Category category, double amount, TransactionType transactionType, Date trasactionDate) {
         this.category = category;
         this.amount = amount;
         this.transactionType = transactionType;
+        this.trasactionDate = trasactionDate;
+    }
+
+    public Transaction(int id , Category category, double amount, TransactionType transactionType, Date trasactionDate) {
+        this.id = id;
+        this.category = category;
+        this.amount = amount;
+        this.transactionType = transactionType;
+        this.trasactionDate = trasactionDate;
     }
 
     public int getId() {
@@ -24,14 +35,6 @@ public class Transaction {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 
     public Category getCategory() {
@@ -57,9 +60,13 @@ public class Transaction {
     public void setTransactionType(TransactionType transactionType) {
         this.transactionType = transactionType;
     }
+
+    public Date getTrasactionDate() {
+        return trasactionDate;
+    }
+
+    public void setTrasactionDate(Date trasactionDate) {
+        this.trasactionDate = trasactionDate;
+    }
 }
 
-enum TransactionType {
-    INCOME,
-    EXPENSE
-}

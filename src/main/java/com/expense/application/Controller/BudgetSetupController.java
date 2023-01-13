@@ -12,22 +12,22 @@ public class BudgetSetupController {
         return budgetSetupList;
     }
 
-    public String createItem(BudgetSetup BudgetSetup){
+    public String createItem(BudgetSetup budgetSetup){
         if(budgetSetupList.size() == 0 ){
-            BudgetSetup.setId(1);
+            budgetSetup.setId(1);
         }else{
             BudgetSetup bs = budgetSetupList.get(budgetSetupList.size() - 1);
-            BudgetSetup.setId(bs.getId() + 1);
+            budgetSetup.setId(bs.getId() + 1);
         }
-        budgetSetupList.add(BudgetSetup);
+        budgetSetupList.add(budgetSetup);
         return "BudgetSetup Created Successfully";
     }
 
-    public String editItem(int itemId, BudgetSetup BudgetSetup){
+    public String editItem(int itemId, BudgetSetup budgetSetup){
         BudgetSetup bSetupItem = budgetSetupList.stream().filter(a -> a.getId() == itemId).collect(Collectors.toList()).get(0);
         budgetSetupList.removeIf(e -> e.getId() == itemId);
-        bSetupItem.setName(BudgetSetup.getName());
-        bSetupItem.setBudgetType(BudgetSetup.getBudgetType());
+        bSetupItem.setName(budgetSetup.getName());
+        bSetupItem.setBudgetType(budgetSetup.getBudgetType());
         budgetSetupList.add(bSetupItem);
         return "BudgetSetup updated Successfully";
     }

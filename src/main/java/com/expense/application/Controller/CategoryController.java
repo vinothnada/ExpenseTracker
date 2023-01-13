@@ -10,11 +10,11 @@ import java.util.stream.Collectors;
 public class CategoryController {
 
     List<Category> categoryList = new ArrayList<>(Arrays.asList(
-            new Category(1,"Salary","Cat1 Description"),
-            new Category(2,"Cloths","Cat2 Description"),
-            new Category(3,"Fuel","Cat3 Description"),
-            new Category(4,"Gifts","Cat3 Description"),
-            new Category(5,"Shops","Cat3 Description")
+            new Category(1,"Salary","Salary Description"),
+            new Category(2,"Cloths","Cloths Description"),
+            new Category(3,"Fuel","Fuel Description"),
+            new Category(4,"Gifts","Gifts Description"),
+            new Category(5,"Shops","Shops Description")
     ));
 
     public List<Category> getAllItems(){

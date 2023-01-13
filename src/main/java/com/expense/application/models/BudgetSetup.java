@@ -1,5 +1,7 @@
 package com.expense.application.models;
 
+import com.expense.application.models.enums.BudgetType;
+
 public class BudgetSetup {
     private int id;
     private String name;
@@ -8,6 +10,10 @@ public class BudgetSetup {
     public BudgetSetup() {
     }
 
+    public BudgetSetup( String name, BudgetType budgetType) {
+        this.name = name;
+        this.budgetType = budgetType;
+    }
     public BudgetSetup(int id, String name, BudgetType budgetType) {
         this.id = id;
         this.name = name;
@@ -39,9 +45,3 @@ public class BudgetSetup {
     }
 }
 
-enum BudgetType {
-    DAY,
-    WEEK,
-    MONTH,
-    YEAR
-}
