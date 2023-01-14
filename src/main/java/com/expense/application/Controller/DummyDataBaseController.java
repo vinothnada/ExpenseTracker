@@ -1,5 +1,8 @@
 package com.expense.application.Controller;
 
+import com.expense.application.models.Transaction;
+import com.expense.application.models.User;
+
 import java.io.IOException;
 
 /**
@@ -28,16 +31,28 @@ public class DummyDataBaseController {
         }
         return dbInstance;
     }
-
-    public static boolean insert(Object obj){
+    /**
+     * insert Transaction method of the {@link DummyDataBaseController} class
+     */
+    public static boolean insert(Transaction transaction){
         return true;
     }
-
-    public static boolean update(Object obj){
+    /**
+     * insert user method of the {@link DummyDataBaseController} class
+     */
+    public static boolean insert(User user){
         return true;
     }
-
-    public static boolean delete(Object obj){
+    /**
+     * update user method of the {@link DummyDataBaseController} class
+     */
+    public static boolean update(Transaction transaction){
+        return true;
+    }
+    /**
+     * delete user method of the {@link DummyDataBaseController} class
+     */
+    public static boolean delete(User user){
         return true;
     }
 
