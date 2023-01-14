@@ -5,6 +5,10 @@ public class Category {
     private String name;
     private String description;
 
+    private boolean isRecurring;
+
+    private int recurranceDays = 0;
+
     public Category() {
     }
 
@@ -13,10 +17,28 @@ public class Category {
         this.description = description;
     }
 
-    public Category(int id, String name, String description) {
+    public Category(int id, String name, String description, boolean isRecurring, int recurranceDays) {
         this.id = id;
         this.name = name;
         this.description = description;
+        this.isRecurring = isRecurring;
+        this.recurranceDays = recurranceDays;
+    }
+
+    public boolean isRecurring() {
+        return isRecurring;
+    }
+
+    public void setRecurring(boolean recurring) {
+        isRecurring = recurring;
+    }
+
+    public int getRecurranceDays() {
+        return recurranceDays;
+    }
+
+    public void setRecurranceDays(int recurranceDays) {
+        this.recurranceDays = recurranceDays;
     }
 
     public int getId() {
@@ -46,5 +68,5 @@ public class Category {
     @Override
     public String toString() {
         return "Category ID: " + id + " | " + "Name: " + name + " | " + "Description: " + description;
-    }
+    }    
 }
