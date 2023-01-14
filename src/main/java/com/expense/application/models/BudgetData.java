@@ -53,4 +53,10 @@ public class BudgetData {
     public void setAmount(double amount) {
         this.amount = amount;
     }
+
+    @Override
+    public String toString() {
+        return "Budget ID: " + id + " | " + "Name: " + budgetSetup.getName() + " | " + "Type: "
+                + budgetSetup.getBudgetType();
+    }
 }
