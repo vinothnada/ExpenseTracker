@@ -1,9 +1,13 @@
 package com.expense.application;
 
-import com.expense.application.Controller.BudgetController;
-import com.expense.application.Controller.BudgetSetupController;
-import com.expense.application.Controller.CategoryController;
-import com.expense.application.Controller.TransactionController;
+import com.expense.application.Consumer.BudgetConsumer;
+import com.expense.application.Consumer.BudgetSetupConsumer;
+import com.expense.application.Consumer.CategoryConsumer;
+import com.expense.application.Consumer.TransactionConsumer;
+import com.expense.application.Injector.BudgetServiceInjector;
+import com.expense.application.Injector.BudgetSetupServiceInjector;
+import com.expense.application.Injector.CategoryServiceInjector;
+import com.expense.application.Injector.TransactionServiceInjector;
 import com.expense.application.models.*;
 import com.expense.application.models.enums.BudgetType;
 import com.expense.application.models.enums.TransactionType;
@@ -18,10 +22,18 @@ import java.util.Scanner;
 public class App {
     private static Scanner scanner = new Scanner(System.in);
     private static Gson gson = new Gson();
-    private static TransactionController transactionController = new TransactionController();
-    private static CategoryController categoryController = new CategoryController();
-    private static BudgetController budgetController = new BudgetController();
-    private static BudgetSetupController budgetSetupController = new BudgetSetupController();
+
+    private static CategoryServiceInjector catgoryInjector = new CategoryServiceInjector();
+    private static CategoryConsumer categoryConsumer = catgoryInjector.getConsumer();
+
+    private static BudgetSetupServiceInjector budgetSetupServiceInjector  = new BudgetSetupServiceInjector();
+    private static BudgetSetupConsumer budgetSetupConsumer = budgetSetupServiceInjector.getConsumer();
+
+    private static BudgetServiceInjector budgetServiceInjector  = new BudgetServiceInjector();
+    private static BudgetConsumer budgetConsumer = budgetServiceInjector.getConsumer();
+
+    private static TransactionServiceInjector transactionServiceInjector  = new TransactionServiceInjector();
+    private static TransactionConsumer transactionConsumer = transactionServiceInjector.getConsumer();
 
     /**
      * Method that prints main menu items and accepts a choice then display
@@ -120,18 +132,18 @@ public class App {
 
             int categoryId = scanner.nextInt();
 
-            if (categoryController.isValidItem(categoryId) == false) {
+            if (categoryConsumer.isValidItem(categoryId) == false) {
                 System.out.println("Invalid category id");
                 continue;
             }
 
-            Category category = categoryController.getItem(categoryId);
+            Category category = categoryConsumer.getItem(categoryId);
 
             System.out.print("Enter amount for the transaction: ");
             double amount = scanner.nextDouble();
 
             Transaction transaction = new Transaction(category, amount, transactionType, new Date());
-            transactionController.createItem(transaction);
+            transactionConsumer.createItem(transaction);
 
             System.out.println("Transaction added successfully.\n");
             break;
@@ -145,7 +157,7 @@ public class App {
      */
     private static void printAllCategories() {
         System.out.println("All categories:");
-        List<Category> categories = categoryController.getAllItems();
+        List<Category> categories = categoryConsumer.getAllItems();
 
         if (categories.isEmpty()) {
             System.out.println("No categories found.");
@@ -161,7 +173,7 @@ public class App {
      */
     private static void printRecentTransactions() {
         System.out.println("Recent transactions:");
-        List<Transaction> transactions = transactionController.getRecentItems();
+        List<Transaction> transactions = transactionConsumer.getRecentItems();
 
         if (transactions.isEmpty()) {
             System.out.println("No recent transactions found.");
@@ -177,7 +189,7 @@ public class App {
      */
     private static void printAllTransactions() {
         System.out.println("All transactions: ");
-        List<Transaction> transactions = transactionController.getAllItems();
+        List<Transaction> transactions = transactionConsumer.getAllItems();
 
         if (transactions.isEmpty()) {
             System.out.println("No transactions found.");
@@ -236,7 +248,7 @@ public class App {
             System.out.println("Enter transaction ID to edit: ");
             int transactionId = scanner.nextInt();
 
-            if (transactionController.isValidItem(transactionId) == false) {
+            if (transactionConsumer.isValidItem(transactionId) == false) {
                 System.out.println("Invalid transaction id");
                 continue;
             }
@@ -246,7 +258,7 @@ public class App {
             System.out.println("Enter a new category ID: ");
             int categoryId = scanner.nextInt();
 
-            if (categoryController.isValidItem(categoryId) == false) {
+            if (categoryConsumer.isValidItem(categoryId) == false) {
                 System.out.println("Invalid category id");
                 continue;
             }
@@ -254,12 +266,12 @@ public class App {
             System.out.println("Enter a new amount: ");
             double amount = scanner.nextDouble();
 
-            Transaction transaction = transactionController.getItem(transactionId);
-            Category category = categoryController.getItem(categoryId);
+            Transaction transaction = transactionConsumer.getItem(transactionId);
+            Category category = categoryConsumer.getItem(categoryId);
 
             transaction.setCategory(category);
             transaction.setAmount(amount);
-            transactionController.editItem(transaction.getId(), transaction);
+            transactionConsumer.editItem(transaction.getId(), transaction);
 
             System.out.println("Transaction updated successfully");
             break;
@@ -278,12 +290,12 @@ public class App {
             System.out.println("Enter transaction ID to delete: ");
             int transactionId = scanner.nextInt();
 
-            if (transactionController.isValidItem(transactionId) == false) {
+            if (transactionConsumer.isValidItem(transactionId) == false) {
                 System.out.println("Invalid transaction id");
                 continue;
             }
 
-            transactionController.deleteItem(transactionId);
+            transactionConsumer.deleteItem(transactionId);
 
             System.out.println("Transaction deleted successfully");
             break;
@@ -341,7 +353,7 @@ public class App {
         String description = scanner.next();
 
         Category category = new Category(name, description);
-        categoryController.createItem(category);
+        categoryConsumer.createItem(category);
 
         System.out.println("Category created successfully");
         showManageCategoriesMenu();
@@ -357,12 +369,12 @@ public class App {
             System.out.println("Enter category ID to delete: ");
             int categoryId = scanner.nextInt();
 
-            if (categoryController.isValidItem(categoryId) == false) {
+            if (categoryConsumer.isValidItem(categoryId) == false) {
                 System.out.println("Invalid category id");
                 continue;
             }
 
-            categoryController.deleteItem(categoryId);
+            categoryConsumer.deleteItem(categoryId);
 
             System.out.println("Category deleted successfully");
             break;
@@ -436,21 +448,21 @@ public class App {
             System.out.println("Enter category ID: ");
             int categoryId = scanner.nextInt();
 
-            if (categoryController.isValidItem(categoryId) == false) {
+            if (categoryConsumer.isValidItem(categoryId) == false) {
                 System.out.println("Invalid category id");
                 continue;
             }
 
-            Category category = categoryController.getItem(categoryId);
+            Category category = categoryConsumer.getItem(categoryId);
 
             System.out.println("Enter budget amount: ");
             double amount = scanner.nextDouble();
 
             BudgetSetup budgetSetup = new BudgetSetup(name, budgetType);
-            budgetSetupController.createItem(budgetSetup);
+            budgetSetupConsumer.createItem(budgetSetup);
 
             BudgetData budgetData = new BudgetData(budgetSetup, category, amount);
-            budgetController.createItem(budgetData);
+            budgetConsumer.createItem(budgetData);
 
             System.out.println("Budget created successfully");
             break;
@@ -469,14 +481,14 @@ public class App {
             System.out.println("Enter budget ID to delete: ");
             int budgetId = scanner.nextInt();
 
-            if (budgetController.isValidItem(budgetId) == false) {
+            if (budgetConsumer.isValidItem(budgetId) == false) {
                 System.out.println("Invalid budget id");
                 continue;
             }
 
-            BudgetData budget = budgetController.getItem(budgetId);
-            budgetController.deleteItem(budgetId);
-            budgetSetupController.deleteItem(budget.getBudgetSetup().getId());
+            BudgetData budget = budgetConsumer.getItem(budgetId);
+            budgetConsumer.deleteItem(budgetId);
+            budgetSetupConsumer.deleteItem(budget.getBudgetSetup().getId());
 
             System.out.println("Budget deleted successfully");
             break;
@@ -495,9 +507,9 @@ public class App {
         }
     }
 
-    // print all budgets in budgetController
+    // print all budgets in budgetConsumer
     private static void printAllBudgets() {
-        List<BudgetData> budgets = budgetController.getAllItems();
+        List<BudgetData> budgets = budgetConsumer.getAllItems();
         System.out.println("All Budgets");
         for (BudgetData budget : budgets) {
             System.out.println(budget.toString());

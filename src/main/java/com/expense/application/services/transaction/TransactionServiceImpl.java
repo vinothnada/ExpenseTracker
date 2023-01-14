@@ -1,4 +1,4 @@
-package com.expense.application.Controller;
+package com.expense.application.services.transaction;
 
 import com.expense.application.models.Transaction;
 
@@ -6,17 +6,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class TransactionController {
+public class TransactionServiceImpl implements TransactionService{
     List<Transaction> transactionList = new ArrayList<>();
 
-    public List<Transaction> getAllItems() {
+    @Override
+    public List<Transaction> getAllItems(){
         return transactionList;
     }
 
-    public String createItem(Transaction Transaction) {
-        if (transactionList.size() == 0) {
+    @Override
+    public String createItem(Transaction Transaction){
+        if(transactionList.size() == 0 ){
             Transaction.setId(1);
-        } else {
+        }else{
             Transaction bs = transactionList.get(transactionList.size() - 1);
             Transaction.setId(bs.getId() + 1);
         }
@@ -24,19 +26,20 @@ public class TransactionController {
         return "Transaction Created Successfully";
     }
 
-    public String editItem(int itemId, Transaction transaction) {
-        Transaction transactionItem = transactionList.stream().filter(a -> a.getId() == itemId)
-                .collect(Collectors.toList()).get(0);
+    @Override
+    public String editItem(int itemId, Transaction transaction){
+        Transaction transactionItem = transactionList.stream().filter(a -> a.getId() == itemId).collect(Collectors.toList()).get(0);
         transactionList.removeIf(e -> e.getId() == itemId);
         transactionItem.setTransactionType(transaction.getTransactionType());
         transactionItem.setAmount(transaction.getAmount());
         transactionItem.setCategory(transaction.getCategory());
-        transactionItem.setTransactionDate(transaction.getTransactionDate());
+        transactionItem.setTrasactionDate(transaction.getTrasactionDate());
         transactionList.add(transactionItem);
         return "Transaction updated Successfully";
     }
 
-    public String deleteItem(int itemId) {
+    @Override
+    public String deleteItem(int itemId){
         transactionList.removeIf(e -> e.getId() == itemId);
         return "Transaction deleted Successfully";
     }
@@ -54,6 +57,5 @@ public class TransactionController {
                 .skip(Math.max(0, transactionList.size() - 10))
                 .collect(Collectors.toList());
         return lastTenTransactions;
-    }
-
+    }    
 }

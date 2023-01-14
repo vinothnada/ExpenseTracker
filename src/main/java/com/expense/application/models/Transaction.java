@@ -22,8 +22,7 @@ public class Transaction {
         this.transactionDate = transactionDate;
     }
 
-    public Transaction(int id, Category category, double amount, TransactionType transactionType,
-            Date transactionDate) {
+    public Transaction(int id , Category category, double amount, TransactionType transactionType, Date transactionDate) {
         this.id = id;
         this.category = category;
         this.amount = amount;
@@ -63,11 +62,11 @@ public class Transaction {
         this.transactionType = transactionType;
     }
 
-    public Date getTransactionDate() {
+    public Date getTrasactionDate() {
         return transactionDate;
     }
 
-    public void setTransactionDate(Date transactionDate) {
+    public void setTrasactionDate(Date transactionDate) {
         this.transactionDate = transactionDate;
     }
 
@@ -76,6 +75,6 @@ public class Transaction {
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         return "Transaction ID: " + id + " | " + "Amount: " + amount + " | " + "Category: " + category.getName() + " | "
                 + "Type: " + transactionType + " | " + "Date: " + formatter.format(transactionDate);
-    }
-
+    }    
 }
+

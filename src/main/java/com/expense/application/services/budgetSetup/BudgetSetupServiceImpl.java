@@ -1,17 +1,20 @@
-package com.expense.application.Controller;
+package com.expense.application.services.budgetSetup;
 
 import com.expense.application.models.BudgetSetup;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class BudgetSetupController {
+public class BudgetSetupServiceImpl implements BudgetSetupService{
     List<BudgetSetup> budgetSetupList = new ArrayList<>();
 
+    @Override
     public List<BudgetSetup> getAllItems(){
         return budgetSetupList;
     }
 
+    @Override
     public String createItem(BudgetSetup budgetSetup){
         if(budgetSetupList.size() == 0 ){
             budgetSetup.setId(1);
@@ -23,6 +26,7 @@ public class BudgetSetupController {
         return "BudgetSetup Created Successfully";
     }
 
+    @Override
     public String editItem(int itemId, BudgetSetup budgetSetup){
         BudgetSetup bSetupItem = budgetSetupList.stream().filter(a -> a.getId() == itemId).collect(Collectors.toList()).get(0);
         budgetSetupList.removeIf(e -> e.getId() == itemId);
@@ -32,6 +36,7 @@ public class BudgetSetupController {
         return "BudgetSetup updated Successfully";
     }
 
+    @Override
     public String deleteItem(int itemId){
         budgetSetupList.removeIf(e -> e.getId() == itemId);
         return "BudgetSetup deleted Successfully";
