@@ -11,7 +11,6 @@ import com.google.gson.*;
 import com.expense.application.models.Category;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
@@ -29,14 +28,15 @@ public class App {
      * appropriate sub menu
      */
     private static void showMainMenu() {
-        while (true) {
+        loop: while (true) {
             System.out.println("Enter number to choose option");
             System.out.println("===============================================");
             System.out.println("1. Add a new transaction ");
             System.out.println("2. View recent transactions");
             System.out.println("3. Manage Transactions");
             System.out.println("4. Manage Categories");
-            System.out.println("5. Track Budget & Progress");
+            System.out.println("5. Manage Budgets");
+            System.out.println("6. Track Budget & Progress");
             System.out.println("-1. Exit application");
             System.out.println("===============================================");
 
@@ -45,19 +45,19 @@ public class App {
             switch (choice) {
                 case 1:
                     showAddTransactionMenu();
-                    break;
+                    break loop;
                 case 2:
                     printRecentTransactions();
-                    break;
+                    break loop;
                 case 3:
                     showManageTransactionsMenu();
-                    break;
+                    break loop;
                 case 4:
-                    System.out.println("Manage Categories");
-                    break;
+                    showManageCategoriesMenu();
+                    break loop;
                 case 5:
-                    System.out.println("Track Budget & Progress");
-                    break;
+                    showManageBudgetsMenu();
+                    break loop;
                 case -1:
                     System.out.println("Exiting application");
                     System.exit(0);
@@ -197,6 +197,7 @@ public class App {
             System.out.println("===============================================");
             System.out.println("1. - Edit a transaction");
             System.out.println("2. - Delete a transaction");
+            System.out.println("3. - View all transactions");
             System.out.println("0. - To view main menu");
             System.out.println("-1 - To exit application");
             System.out.println("===============================================");
@@ -209,6 +210,9 @@ public class App {
                     break loop;
                 case 2:
                     deleteTransaction();
+                    break loop;
+                case 3:
+                    printAllTransactions();
                     break loop;
                 case 0:
                     showMainMenu();
@@ -288,64 +292,220 @@ public class App {
         showManageTransactionsMenu();
     }
 
+    /**
+     * Method that prints options for managing categories and accepts a choice
+     */
+    private static void showManageCategoriesMenu() {
+        loop: while (true) {
+            System.out.println("Enter number to choose option");
+            System.out.println("===============================================");
+            System.out.println("1. - Create a category");
+            System.out.println("2. - Delete a category");
+            System.out.println("3. - View categories");
+            System.out.println("0. - To view main menu");
+            System.out.println("-1 - To exit application");
+            System.out.println("===============================================");
+
+            System.out.print("Enter option: ");
+            int choice = scanner.nextInt();
+            switch (choice) {
+                case 1:
+                    createCategory();
+                    break loop;
+                case 2:
+                    deleteCategory();
+                    break loop;
+                case 3:
+                    printAllCategories();
+                    break loop;
+                case 0:
+                    showMainMenu();
+                    break loop;
+                case -1:
+                    System.out.println("Exiting application");
+                    System.exit(0);
+                default:
+                    System.out.println("Invalid option");
+            }
+        }
+    }
+
+    /**
+     * Method that handles the logic of creating a category
+     */
+    private static void createCategory() {
+        System.out.println("Enter category name: ");
+        String name = scanner.next();
+
+        System.out.println("Enter category description: ");
+        String description = scanner.next();
+
+        Category category = new Category(name, description);
+        categoryController.createItem(category);
+
+        System.out.println("Category created successfully");
+        showManageCategoriesMenu();
+    }
+
+    /**
+     * Method that handles the logic of deleting a category
+     */
+    private static void deleteCategory() {
+        printAllCategories();
+
+        while (true) {
+            System.out.println("Enter category ID to delete: ");
+            int categoryId = scanner.nextInt();
+
+            if (categoryController.isValidItem(categoryId) == false) {
+                System.out.println("Invalid category id");
+                continue;
+            }
+
+            categoryController.deleteItem(categoryId);
+
+            System.out.println("Category deleted successfully");
+            break;
+        }
+
+        showManageCategoriesMenu();
+    }
+
+    /**
+     * Method that prints options for managing budgets and accepts a choice
+     */
+    private static void showManageBudgetsMenu() {
+        loop: while (true) {
+            System.out.println("Enter number to choose option");
+            System.out.println("===============================================");
+            System.out.println("1. - Create a budget");
+            System.out.println("2. - Delete a budget");
+            System.out.println("3. - View budgets");
+            System.out.println("0. - To view main menu");
+            System.out.println("-1 - To exit application");
+            System.out.println("===============================================");
+
+            System.out.print("Enter option: ");
+            int choice = scanner.nextInt();
+            switch (choice) {
+                case 1:
+                    createBudget();
+                    break loop;
+                case 2:
+                    deleteBudget();
+                    break loop;
+                case 3:
+                    printAllBudgets();
+                    break loop;
+                case 0:
+                    showMainMenu();
+                    break loop;
+                case -1:
+                    System.out.println("Exiting application");
+                    System.exit(0);
+                default:
+                    System.out.println("Invalid option");
+            }
+        }
+    }
+
+    /**
+     * Method that handles the logic of creating a budget
+     */
+    private static void createBudget() {
+        System.out.println("Create New Budget");
+
+        while (true) {
+            printAllBudgetTypes();
+
+            System.out.println("Enter budget name: ");
+            String name = scanner.next();
+
+            System.out.println("Enter budget type: ");
+            int budgetTypeIndex = scanner.nextInt();
+
+            if (budgetTypeIndex < 1 || budgetTypeIndex > BudgetType.values().length) {
+                System.out.println("Invalid budget type");
+                continue;
+            }
+
+            BudgetType budgetType = BudgetType.values()[budgetTypeIndex - 1];
+
+            printAllCategories();
+
+            System.out.println("Enter category ID: ");
+            int categoryId = scanner.nextInt();
+
+            if (categoryController.isValidItem(categoryId) == false) {
+                System.out.println("Invalid category id");
+                continue;
+            }
+
+            Category category = categoryController.getItem(categoryId);
+
+            System.out.println("Enter budget amount: ");
+            double amount = scanner.nextDouble();
+
+            BudgetSetup budgetSetup = new BudgetSetup(name, budgetType);
+            budgetSetupController.createItem(budgetSetup);
+
+            BudgetData budgetData = new BudgetData(budgetSetup, category, amount);
+            budgetController.createItem(budgetData);
+
+            System.out.println("Budget created successfully");
+            break;
+        }
+
+        showManageBudgetsMenu();
+    }
+
+    /**
+     * Method that handles the logic of deleting a budget
+     */
+    private static void deleteBudget() {
+        printAllBudgets();
+
+        while (true) {
+            System.out.println("Enter budget ID to delete: ");
+            int budgetId = scanner.nextInt();
+
+            if (budgetController.isValidItem(budgetId) == false) {
+                System.out.println("Invalid budget id");
+                continue;
+            }
+
+            BudgetData budget = budgetController.getItem(budgetId);
+            budgetController.deleteItem(budgetId);
+            budgetSetupController.deleteItem(budget.getBudgetSetup().getId());
+
+            System.out.println("Budget deleted successfully");
+            break;
+        }
+
+        showManageBudgetsMenu();
+    }
+
+    // print budget type enum with index
+    private static void printAllBudgetTypes() {
+        System.out.println("Available budget types, ");
+        int index = 1;
+        for (BudgetType budgetType : BudgetType.values()) {
+            System.out.println(index + ". " + budgetType);
+            index++;
+        }
+    }
+
+    // print all budgets in budgetController
+    private static void printAllBudgets() {
+        List<BudgetData> budgets = budgetController.getAllItems();
+        System.out.println("All Budgets");
+        for (BudgetData budget : budgets) {
+            System.out.println(budget.toString());
+        }
+    }
+
     public static void main(String[] args) {
-        // create and list all categories
-        Category cat1 = new Category("Misc", "Other expenses");
-        categoryController.createItem(cat1);
-        List<Category> categories = new ArrayList<>();
-        categories = categoryController.getAllItems();
-
-        System.out.println(gson.toJson(categories));
-        System.out.println("=========================================");
-
-        // settingup budget
-        BudgetSetup budgetSetup = new BudgetSetup("My Budget", BudgetType.MONTH);
-        budgetSetupController.createItem(budgetSetup);
-        List<BudgetSetup> budgetSetups = budgetSetupController.getAllItems();
-
-        System.out.println(gson.toJson(budgetSetups));
-        System.out.println("=========================================");
-
-        // configure budget
-        BudgetData bdata1 = new BudgetData(budgetSetups.get(0), categories.get(0),
-                500);
-        budgetController.createItem(bdata1);
-        BudgetData bdata2 = new BudgetData(budgetSetups.get(0), categories.get(1),
-                1000);
-        budgetController.createItem(bdata2);
-        BudgetData bdata3 = new BudgetData(budgetSetups.get(0), categories.get(2),
-                1500);
-        budgetController.createItem(bdata3);
-        BudgetData bdata4 = new BudgetData(budgetSetups.get(0), categories.get(3),
-                3000);
-        budgetController.createItem(bdata4);
-        BudgetData bdata5 = new BudgetData(budgetSetups.get(0), categories.get(4),
-                5000);
-        budgetController.createItem(bdata5);
-        List<BudgetData> budgetList = budgetController.getAllItems();
-
-        System.out.println(gson.toJson(budgetList));
-        System.out.println("=========================================");
-
-        // Add transactions
-        Transaction t1 = new Transaction(categories.get(0), 50000,
-                TransactionType.INCOME, parseDate("2023-01-01"));
-        transactionController.createItem(t1);
-        Transaction t2 = new Transaction(categories.get(1), 10000,
-                TransactionType.EXPENSE, parseDate("2023-01-05"));
-        transactionController.createItem(t2);
-        Transaction t3 = new Transaction(categories.get(2), 12500,
-                TransactionType.EXPENSE, parseDate("2023-01-15"));
-        transactionController.createItem(t3);
-        Transaction t4 = new Transaction(categories.get(3), 13500,
-                TransactionType.EXPENSE, parseDate("2023-01-17"));
-        transactionController.createItem(t4);
-
-        List<Transaction> AllTransactions = transactionController.getAllItems();
-
-        System.out.println(gson.toJson(AllTransactions));
-        System.out.println("=========================================");
-
+        // start the main menu
         showMainMenu();
     }
 
@@ -357,4 +517,16 @@ public class App {
         }
     }
 
+    public static void showProgress(int percent) {
+        StringBuilder progressBar = new StringBuilder("[");
+        for (int i = 0; i < 50; i++) {
+            if (i < (percent / 2)) {
+                progressBar.append("=");
+            } else {
+                progressBar.append(" ");
+            }
+        }
+        progressBar.append("] " + percent + "%");
+        System.out.print("\r" + progressBar);
+    }
 }
