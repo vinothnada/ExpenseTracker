@@ -10,24 +10,25 @@ public class Transaction {
     private Category category;
     private double amount;
     private TransactionType transactionType;
-    private Date trasactionDate;
+    private Date transactionDate;
 
     public Transaction() {
     }
 
-    public Transaction(Category category, double amount, TransactionType transactionType, Date trasactionDate) {
+    public Transaction(Category category, double amount, TransactionType transactionType, Date transactionDate) {
         this.category = category;
         this.amount = amount;
         this.transactionType = transactionType;
-        this.trasactionDate = trasactionDate;
+        this.transactionDate = transactionDate;
     }
 
-    public Transaction(int id, Category category, double amount, TransactionType transactionType, Date trasactionDate) {
+    public Transaction(int id, Category category, double amount, TransactionType transactionType,
+            Date transactionDate) {
         this.id = id;
         this.category = category;
         this.amount = amount;
         this.transactionType = transactionType;
-        this.trasactionDate = trasactionDate;
+        this.transactionDate = transactionDate;
     }
 
     public int getId() {
@@ -62,19 +63,19 @@ public class Transaction {
         this.transactionType = transactionType;
     }
 
-    public Date getTrasactionDate() {
-        return trasactionDate;
+    public Date getTransactionDate() {
+        return transactionDate;
     }
 
-    public void setTrasactionDate(Date trasactionDate) {
-        this.trasactionDate = trasactionDate;
+    public void setTransactionDate(Date transactionDate) {
+        this.transactionDate = transactionDate;
     }
 
     @Override
     public String toString() {
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         return "Transaction ID: " + id + " | " + "Amount: " + amount + " | " + "Category: " + category.getName() + " | "
-                + "Type: " + transactionType + " | " + "Date: " + formatter.format(trasactionDate);
+                + "Type: " + transactionType + " | " + "Date: " + formatter.format(transactionDate);
     }
 
 }

@@ -31,7 +31,7 @@ public class TransactionController {
         transactionItem.setTransactionType(transaction.getTransactionType());
         transactionItem.setAmount(transaction.getAmount());
         transactionItem.setCategory(transaction.getCategory());
-        transactionItem.setTrasactionDate(transaction.getTrasactionDate());
+        transactionItem.setTransactionDate(transaction.getTransactionDate());
         transactionList.add(transactionItem);
         return "Transaction updated Successfully";
     }

@@ -10,14 +10,14 @@ public class BudgetController {
 
     List<BudgetData> budgetDataList = new ArrayList<>();
 
-    public List<BudgetData> getAllItems(){
+    public List<BudgetData> getAllItems() {
         return budgetDataList;
     }
 
-    public String createItem(BudgetData budgetData){
-        if(budgetDataList.size() == 0 ){
+    public String createItem(BudgetData budgetData) {
+        if (budgetDataList.size() == 0) {
             budgetData.setId(1);
-        }else{
+        } else {
             BudgetData bs = budgetDataList.get(budgetDataList.size() - 1);
             budgetData.setId(bs.getId() + 1);
         }
@@ -25,8 +25,9 @@ public class BudgetController {
         return "BudgetData Created Successfully";
     }
 
-    public String editItem(int itemId, BudgetData budgetData){
-        BudgetData bDataItem = budgetDataList.stream().filter(a -> a.getId() == itemId).collect(Collectors.toList()).get(0);
+    public String editItem(int itemId, BudgetData budgetData) {
+        BudgetData bDataItem = budgetDataList.stream().filter(a -> a.getId() == itemId).collect(Collectors.toList())
+                .get(0);
         budgetDataList.removeIf(e -> e.getId() == itemId);
         bDataItem.setBudgetSetup(budgetData.getBudgetSetup());
         bDataItem.setAmount(budgetData.getAmount());
@@ -35,9 +36,16 @@ public class BudgetController {
         return "BudgetData updated Successfully";
     }
 
-    public String deleteItem(int itemId){
+    public String deleteItem(int itemId) {
         budgetDataList.removeIf(e -> e.getId() == itemId);
         return "BudgetData deleted Successfully";
     }
 
+    public BudgetData getItem(int itemId) {
+        return budgetDataList.stream().filter(a -> a.getId() == itemId).collect(Collectors.toList()).get(0);
+    }
+
+    public Boolean isValidItem(int itemId) {
+        return budgetDataList.stream().anyMatch(a -> a.getId() == itemId);
+    }
 }
