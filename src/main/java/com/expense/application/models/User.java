@@ -8,7 +8,7 @@ import java.util.UUID;
 public class User {
 
     private String userName;
-    private String userId;
+    private final String userId;
     /**
      * User constructor
      */
@@ -33,11 +33,5 @@ public class User {
      */
     public String getUserId() {
         return userId;
-    }
-    /**
-     * setUserId method
-     */
-    public void setUserId(String userId) {
-        this.userId = userId;
     }
 }
