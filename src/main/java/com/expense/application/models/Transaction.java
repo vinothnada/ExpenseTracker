@@ -2,6 +2,7 @@ package com.expense.application.models;
 
 import com.expense.application.models.enums.TransactionType;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Transaction {
@@ -21,7 +22,7 @@ public class Transaction {
         this.trasactionDate = trasactionDate;
     }
 
-    public Transaction(int id , Category category, double amount, TransactionType transactionType, Date trasactionDate) {
+    public Transaction(int id, Category category, double amount, TransactionType transactionType, Date trasactionDate) {
         this.id = id;
         this.category = category;
         this.amount = amount;
@@ -68,5 +69,12 @@ public class Transaction {
     public void setTrasactionDate(Date trasactionDate) {
         this.trasactionDate = trasactionDate;
     }
-}
 
+    @Override
+    public String toString() {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        return "Transaction ID: " + id + " | " + "Amount: " + amount + " | " + "Category: " + category.getName() + " | "
+                + "Type: " + transactionType + " | " + "Date: " + formatter.format(trasactionDate);
+    }
+
+}

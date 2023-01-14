@@ -12,6 +12,7 @@ public class Category {
         this.name = name;
         this.description = description;
     }
+
     public Category(int id, String name, String description) {
         this.id = id;
         this.name = name;
@@ -40,5 +41,10 @@ public class Category {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Override
+    public String toString() {
+        return "Category ID: " + id + " | " + "Name: " + name + " | " + "Description: " + description;
     }
 }
