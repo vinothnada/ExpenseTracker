@@ -55,6 +55,12 @@ public class DummyDataBaseController {
     public static boolean delete(User user){
         return true;
     }
+    /**
+     * delete transaction method of the {@link DummyDataBaseController} class
+     */
+    public static boolean delete(Transaction transaction){
+        return true;
+    }
 
 
 }

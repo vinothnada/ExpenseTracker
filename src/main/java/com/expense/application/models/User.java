@@ -1,54 +1,37 @@
 package com.expense.application.models;
 
+import java.util.UUID;
+
 /**
  * User Class represents a user
  */
 public class User {
 
     private String userName;
-    private int userId;
-
+    private final String userId;
     /**
      * User constructor
      */
-    public User(String userName) {
-        this.userId = 1;
+    public User(String userName){
+        this.userId = String.valueOf(UUID.randomUUID());
         this.userName = userName;
     }
-
-    /**
-     * User constructor
-     */
-    public User(int userId, String userName) {
-        this.userId = userId;
-        this.userName = userName;
-    }
-
     /**
      * getUserName method
      */
     public String getUserName() {
         return userName;
     }
-
     /**
      * setUserName method
      */
     public void setUserName(String userName) {
         this.userName = userName;
     }
-
     /**
      * getUserId method
      */
-    public int getId() {
+    public String getUserId() {
         return userId;
-    }
-
-    /**
-     * setUserId method
-     */
-    public void setId(int userId) {
-        this.userId = userId;
     }
 }
