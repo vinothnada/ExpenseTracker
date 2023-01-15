@@ -4,6 +4,8 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import java.util.Objects;
+
 /**
  * Unit test for simple App.
  */
@@ -33,6 +35,7 @@ public class UserTest
      */
     public void testApp()
     {
-        assertTrue( true );
+        User user = new User("testuser");
+        assertEquals("testuser", user.getUserName());
     }
 }
