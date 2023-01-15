@@ -55,44 +55,72 @@
           </execution>
         </executions>
       </plugin>
-      <!--            <plugin>-->
-      <!--                <groupId>org.apache.maven.plugins</groupId>-->
-      <!--                <artifactId>maven-assembly-plugin</artifactId>-->
-      <!--                <version>3.1.1</version>-->
-      <!--                <configuration>-->
-      <!--                    <descriptorRefs>-->
-      <!--                        <descriptorRef>jar-with-dependencies</descriptorRef>-->
-      <!--                    </descriptorRefs>-->
-      <!--                    <archive>-->
-      <!--                        <manifest>-->
-      <!--                            <mainClass>com.expense.application.App</mainClass>-->
-      <!--                        </manifest>-->
-      <!--                    </archive>-->
-      <!--                </configuration>-->
-      <!--                <executions>-->
-      <!--                    <execution>-->
-      <!--                        <id>make-assembly</id>-->
-      <!--                        <phase>package</phase>-->
-      <!--                        <goals>-->
-      <!--                            <goal>single</goal>-->
-      <!--                        </goals>-->
-      <!--                    </execution>-->
-      <!--                </executions>-->
-      <!--            </plugin>-->
-      <!-- Code Coverage report generation -->
+      <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-assembly-plugin</artifactId>
+          <version>3.1.1</version>
+          <configuration>
+              <descriptorRefs>
+                  <descriptorRef>jar-with-dependencies</descriptorRef>
+              </descriptorRefs>
+              <archive>
+                  <manifest>
+                      <mainClass>com.expense.application.App</mainClass>
+                  </manifest>
+              </archive>
+          </configuration>
+          <executions>
+              <execution>
+                  <id>make-assembly</id>
+                  <phase>package</phase>
+                  <goals>
+                      <goal>single</goal>
+                  </goals>
+              </execution>
+          </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-pmd-plugin</artifactId>
+        <version>3.12.0</version>
+        <executions>
+          <execution>
+            <id>pmd-scan</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>check</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
       <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
-        <version>0.7.9</version>
+        <version>0.8.5</version>
         <executions>
+          <!-- prepare the agent -->
           <execution>
+            <id>prepare-agent</id>
+            <phase>process-test-classes</phase>
             <goals>
               <goal>prepare-agent</goal>
             </goals>
           </execution>
+
+          <!-- If you have integration tests run with the `failsafe-maven-plugin`
+                 use `prepare-agent-integration` -->
           <execution>
-            <id>generate-code-coverage-report</id>
-            <phase>test</phase>
+            <id>prepare-agent-integration</id>
+            <phase>pre-integration-test</phase>
+            <goals>
+              <goal>prepare-agent-integration</goal>
+            </goals>
+          </execution>
+
+          <!-- generate an HTML report -->
+          <execution>
+            <id>report</id>
+            <phase>verify</phase>
             <goals>
               <goal>report</goal>
             </goals>
