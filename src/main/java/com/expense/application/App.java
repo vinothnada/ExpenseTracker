@@ -8,11 +8,14 @@ import com.expense.application.Injector.BudgetServiceInjector;
 import com.expense.application.Injector.BudgetSetupServiceInjector;
 import com.expense.application.Injector.CategoryServiceInjector;
 import com.expense.application.Injector.TransactionServiceInjector;
-import com.expense.application.models.*;
+import com.expense.application.models.BudgetData;
+import com.expense.application.models.BudgetSetup;
+import com.expense.application.models.Category;
+import com.expense.application.models.Transaction;
 import com.expense.application.models.enums.BudgetType;
 import com.expense.application.models.enums.TransactionType;
-import com.google.gson.*;
-import com.expense.application.models.Category;
+import com.google.gson.Gson;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -132,7 +135,7 @@ public class App {
 
             int categoryId = scanner.nextInt();
 
-            if (categoryConsumer.isValidItem(categoryId) == false) {
+            if (!categoryConsumer.isValidItem(categoryId)) {
                 System.out.println("Invalid category id");
                 continue;
             }
@@ -182,6 +185,7 @@ public class App {
                 System.out.println(transaction.toString());
             }
         }
+        showMainMenu();
     }
 
     /**
@@ -198,6 +202,7 @@ public class App {
                 System.out.println(transaction.toString());
             }
         }
+        showMainMenu();
     }
 
     /**
@@ -505,15 +510,21 @@ public class App {
             System.out.println(index + ". " + budgetType);
             index++;
         }
+        showMainMenu();
     }
 
     // print all budgets in budgetConsumer
     private static void printAllBudgets() {
         List<BudgetData> budgets = budgetConsumer.getAllItems();
-        System.out.println("All Budgets");
-        for (BudgetData budget : budgets) {
-            System.out.println(budget.toString());
+        if(budgets.size() == 0){
+            System.out.println("No Budgets Recorded");
+        }else{
+            System.out.println("All Budgets");
+            for (BudgetData budget : budgets) {
+                System.out.println(budget.toString());
+            }
         }
+        showMainMenu();
     }
 
     public static void main(String[] args) {
