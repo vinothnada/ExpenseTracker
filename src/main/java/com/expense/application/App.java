@@ -139,7 +139,7 @@ public class App {
 
             int categoryId = scanner.nextInt();
 
-            if (categoryConsumer.isValidItem(categoryId) == false) {
+            if (!categoryConsumer.isValidItem(categoryId)) {
                 System.out.println("Invalid category id");
                 continue;
             }
@@ -189,6 +189,7 @@ public class App {
                 System.out.println(transaction.toString());
             }
         }
+        showMainMenu();
     }
 
     /**
@@ -205,6 +206,7 @@ public class App {
                 System.out.println(transaction.toString());
             }
         }
+        showMainMenu();
     }
 
     /**
@@ -512,15 +514,21 @@ public class App {
             System.out.println(index + ". " + budgetType);
             index++;
         }
+        showMainMenu();
     }
 
     // print all budgets in budgetConsumer
     private static void printAllBudgets() {
         List<BudgetData> budgets = budgetConsumer.getAllItems();
-        System.out.println("All Budgets");
-        for (BudgetData budget : budgets) {
-            System.out.println(budget.toString());
+        if(budgets.size() == 0){
+            System.out.println("No Budgets Recorded");
+        }else{
+            System.out.println("All Budgets");
+            for (BudgetData budget : budgets) {
+                System.out.println(budget.toString());
+            }
         }
+        showMainMenu();
     }
 
     // print all categories in categoryConsumer

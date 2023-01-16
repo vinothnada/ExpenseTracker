@@ -5,7 +5,6 @@ import com.expense.application.models.Transaction;
 import com.expense.application.models.User;
 import com.expense.application.models.enums.BudgetType;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedList;
 
@@ -19,23 +18,20 @@ public class DummyDataBase {
     private static DummyDataBase dbInstance;
     private static LinkedList<User> userList = new LinkedList<>();
     private static HashMap<User, Transaction> transactionList = new HashMap<>();
-    private static LinkedList<Category> categoryList = new LinkedList();
+    private static LinkedList<Category> categoryList = new LinkedList<>();
     private static HashMap<User, Category> userDefinedCategoryList = new HashMap<>();
     private static LinkedList<BudgetType> budgetTypeList = new LinkedList<>();
 
     /**
      * DummyDataBaseController constructor of the {@link DummyDataBase} class
      */
-    private DummyDataBase(){
-    }
+    private DummyDataBase(){}
     /**
      * getInstance method of the {@link DummyDataBase} class
      */
-    public static DummyDataBase getInstance() throws IOException {
+    public static DummyDataBase getDbInstance() {
         if (dbInstance == null)
         {
-//            ConfigReader reader = new ConfigReader("settings.properties");
-//            String appName = reader.getProperty("application.name");
             dbInstance = new DummyDataBase();
         }
         return dbInstance;

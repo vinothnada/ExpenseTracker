@@ -1,6 +1,7 @@
 package com.expense.application.services.transaction;
 
 import com.expense.application.models.Transaction;
+import com.expense.application.utils.DummyDataBase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.stream.Collectors;
 
 public class TransactionServiceImpl implements TransactionService{
     List<Transaction> transactionList = new ArrayList<>();
+    DummyDataBase database = DummyDataBase.getDbInstance();
 
     @Override
     public List<Transaction> getAllItems(){

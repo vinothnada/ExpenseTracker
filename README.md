@@ -24,6 +24,16 @@ Then you can create the executable App JAR file
 mvn compile
 mvn package
 ```
+## Reports
+To generate unit test and coverage report
+```shell
+mvn test
+```
+also, you can get a vulnerability and static code analysis using the following command. This project uses JCoCo for code coverage, owasp dependency check and maven-pmd for static code analysis. 
+```shell
+mvn verify
+```
+
 ## Contributors
 - @ipmanlk Navinda Dissanayake
 - @vinothnada Vinothan Nadarajah
