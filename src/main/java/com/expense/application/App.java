@@ -257,7 +257,7 @@ public class App {
             System.out.println("Enter transaction ID to edit: ");
             int transactionId = scanner.nextInt();
 
-            if (transactionConsumer.isValidItem(transactionId) == false) {
+            if (!transactionConsumer.isValidItem(transactionId)) {
                 System.out.println("Invalid transaction id");
                 continue;
             }
@@ -267,7 +267,7 @@ public class App {
             System.out.println("Enter a new category ID: ");
             int categoryId = scanner.nextInt();
 
-            if (categoryConsumer.isValidItem(categoryId) == false) {
+            if (!categoryConsumer.isValidItem(categoryId)) {
                 System.out.println("Invalid category id");
                 continue;
             }
@@ -299,7 +299,7 @@ public class App {
             System.out.println("Enter transaction ID to delete: ");
             int transactionId = scanner.nextInt();
 
-            if (transactionConsumer.isValidItem(transactionId) == false) {
+            if (!transactionConsumer.isValidItem(transactionId)) {
                 System.out.println("Invalid transaction id");
                 continue;
             }
@@ -378,7 +378,7 @@ public class App {
             System.out.println("Enter category ID to delete: ");
             int categoryId = scanner.nextInt();
 
-            if (categoryConsumer.isValidItem(categoryId) == false) {
+            if (!categoryConsumer.isValidItem(categoryId)) {
                 System.out.println("Invalid category id");
                 continue;
             }
@@ -457,7 +457,7 @@ public class App {
             System.out.println("Enter category ID: ");
             int categoryId = scanner.nextInt();
 
-            if (categoryConsumer.isValidItem(categoryId) == false) {
+            if (!categoryConsumer.isValidItem(categoryId)) {
                 System.out.println("Invalid category id");
                 continue;
             }
@@ -490,7 +490,7 @@ public class App {
             System.out.println("Enter budget ID to delete: ");
             int budgetId = scanner.nextInt();
 
-            if (budgetConsumer.isValidItem(budgetId) == false) {
+            if (!budgetConsumer.isValidItem(budgetId)) {
                 System.out.println("Invalid budget id");
                 continue;
             }
@@ -514,7 +514,6 @@ public class App {
             System.out.println(index + ". " + budgetType);
             index++;
         }
-        showMainMenu();
     }
 
     // print all budgets in budgetConsumer
@@ -608,7 +607,7 @@ public class App {
                 progressBar.append(" ");
             }
         }
-        progressBar.append("] " + percent + "%");
+        progressBar.append("] ").append(percent).append("%");
         System.out.print("\r" + progressBar);
     }
 
