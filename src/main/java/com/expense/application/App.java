@@ -8,16 +8,16 @@ import com.expense.application.Injector.BudgetServiceInjector;
 import com.expense.application.Injector.BudgetSetupServiceInjector;
 import com.expense.application.Injector.CategoryServiceInjector;
 import com.expense.application.Injector.TransactionServiceInjector;
-import com.expense.application.models.BudgetData;
-import com.expense.application.models.BudgetSetup;
-import com.expense.application.models.Category;
-import com.expense.application.models.Transaction;
+import com.expense.application.models.*;
 import com.expense.application.models.enums.BudgetType;
 import com.expense.application.models.enums.TransactionType;
-import com.google.gson.Gson;
+import com.google.gson.*;
+import com.expense.application.models.Category;
+import com.expense.application.models.dtos.TrackUsage;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
@@ -29,13 +29,13 @@ public class App {
     private static CategoryServiceInjector catgoryInjector = new CategoryServiceInjector();
     private static CategoryConsumer categoryConsumer = catgoryInjector.getConsumer();
 
-    private static BudgetSetupServiceInjector budgetSetupServiceInjector  = new BudgetSetupServiceInjector();
+    private static BudgetSetupServiceInjector budgetSetupServiceInjector = new BudgetSetupServiceInjector();
     private static BudgetSetupConsumer budgetSetupConsumer = budgetSetupServiceInjector.getConsumer();
 
-    private static BudgetServiceInjector budgetServiceInjector  = new BudgetServiceInjector();
+    private static BudgetServiceInjector budgetServiceInjector = new BudgetServiceInjector();
     private static BudgetConsumer budgetConsumer = budgetServiceInjector.getConsumer();
 
-    private static TransactionServiceInjector transactionServiceInjector  = new TransactionServiceInjector();
+    private static TransactionServiceInjector transactionServiceInjector = new TransactionServiceInjector();
     private static TransactionConsumer transactionConsumer = transactionServiceInjector.getConsumer();
 
     /**
@@ -72,6 +72,10 @@ public class App {
                     break loop;
                 case 5:
                     showManageBudgetsMenu();
+                    break loop;
+
+                case 6:
+                    showBudgetProgress();
                     break loop;
                 case -1:
                     System.out.println("Exiting application");
@@ -527,6 +531,61 @@ public class App {
         showMainMenu();
     }
 
+    // print all categories in categoryConsumer
+    public static void showBudgetProgress() {
+        System.out.println("Budget Progress,\n");
+
+        List<Transaction> allTransactions = transactionConsumer.getAllItems();
+        List<Category> categories = categoryConsumer.getAllItems();
+        List<BudgetData> budgetList = budgetConsumer.getAllItems();
+
+        // Budget calculations
+        List<TrackUsage> usageList = new ArrayList<>();
+
+        categories.forEach(cat -> {
+            TrackUsage tru = new TrackUsage();
+            tru.setCategory(cat.getName());
+            budgetList.forEach(i -> {
+                if (cat.getId() == i.getCategory().getId()) {
+                    tru.setBudget(i.getAmount());
+                }
+            });
+            allTransactions.forEach(trans -> {
+                if (cat.getId() == trans.getCategory().getId()) {
+                    if (trans.getTransactionType() == TransactionType.INCOME) {
+                        tru.setIncome(trans.getAmount());
+                        tru.setExpense(0);
+                    } else {
+                        tru.setExpense(trans.getAmount());
+                        tru.setIncome(0);
+                    }
+                }
+            });
+            usageList.add(tru);
+        });
+
+        usageList.forEach(item -> {
+            double budgetPercentage = 0;
+            if (item.getExpense() > 0) {
+                budgetPercentage = item.getExpense() * 100 / item.getBudget();
+            }
+
+            item.setBudgetPercentage(budgetPercentage);
+        });
+
+        usageList.forEach(item -> {
+            System.out.println("Category: " + item.getCategory() + " | " + "Budget: " + item.getBudget() + " | "
+                    + "Income: " + item.getIncome() + " | " + "Expense: " + item.getExpense());
+            int progress = (int) item.getBudgetPercentage();
+            System.out.println("Progress,");
+            showProgress(progress);
+            System.out.println("\n");
+        });
+
+        System.out.println("\n");
+        showMainMenu();
+    }
+
     public static void main(String[] args) {
         // start the main menu
         showMainMenu();
@@ -552,4 +611,5 @@ public class App {
         progressBar.append("] " + percent + "%");
         System.out.print("\r" + progressBar);
     }
+
 }
