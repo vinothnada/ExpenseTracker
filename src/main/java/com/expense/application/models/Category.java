@@ -7,7 +7,7 @@ public class Category {
 
     private boolean isRecurring;
 
-    private int recurranceDays = 0;
+    private int recurrenceDays = 0;
 
     public Category() {
     }
@@ -17,12 +17,12 @@ public class Category {
         this.description = description;
     }
 
-    public Category(int id, String name, String description, boolean isRecurring, int recurranceDays) {
+    public Category(int id, String name, String description, boolean isRecurring, int recurrenceDays) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.isRecurring = isRecurring;
-        this.recurranceDays = recurranceDays;
+        this.recurrenceDays = recurrenceDays;
     }
 
     public boolean isRecurring() {
@@ -33,12 +33,12 @@ public class Category {
         isRecurring = recurring;
     }
 
-    public int getRecurranceDays() {
-        return recurranceDays;
+    public int getRecurrenceDays() {
+        return recurrenceDays;
     }
 
-    public void setRecurranceDays(int recurranceDays) {
-        this.recurranceDays = recurranceDays;
+    public void setRecurrenceDays(int recurrenceDays) {
+        this.recurrenceDays = recurrenceDays;
     }
 
     public int getId() {

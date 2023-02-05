@@ -23,20 +23,20 @@ import java.util.List;
 import java.util.Scanner;
 
 public class App {
-    private static Scanner scanner = new Scanner(System.in);
-    private static Gson gson = new Gson();
+    private static final Scanner scanner = new Scanner(System.in);
+    private static final Gson gson = new Gson();
 
-    private static CategoryServiceInjector catgoryInjector = new CategoryServiceInjector();
-    private static CategoryConsumer categoryConsumer = catgoryInjector.getConsumer();
+    private static final CategoryServiceInjector catgoryInjector = new CategoryServiceInjector();
+    private static final CategoryConsumer categoryConsumer = catgoryInjector.getConsumer();
 
-    private static BudgetSetupServiceInjector budgetSetupServiceInjector = new BudgetSetupServiceInjector();
-    private static BudgetSetupConsumer budgetSetupConsumer = budgetSetupServiceInjector.getConsumer();
+    private static final BudgetSetupServiceInjector budgetSetupServiceInjector = new BudgetSetupServiceInjector();
+    private static final BudgetSetupConsumer budgetSetupConsumer = budgetSetupServiceInjector.getConsumer();
 
-    private static BudgetServiceInjector budgetServiceInjector = new BudgetServiceInjector();
-    private static BudgetConsumer budgetConsumer = budgetServiceInjector.getConsumer();
+    private static final BudgetServiceInjector budgetServiceInjector = new BudgetServiceInjector();
+    private static final BudgetConsumer budgetConsumer = budgetServiceInjector.getConsumer();
 
-    private static TransactionServiceInjector transactionServiceInjector = new TransactionServiceInjector();
-    private static TransactionConsumer transactionConsumer = transactionServiceInjector.getConsumer();
+    private static final TransactionServiceInjector transactionServiceInjector = new TransactionServiceInjector();
+    private static final TransactionConsumer transactionConsumer = transactionServiceInjector.getConsumer();
 
     /**
      * Method that prints main menu items and accepts a choice then display

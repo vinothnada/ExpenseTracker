@@ -16,11 +16,11 @@ public class DummyDataBase {
      * DummyDataBaseController private static instance for a singleton connection
      */
     private static DummyDataBase dbInstance;
-    private static LinkedList<User> userList = new LinkedList<>();
-    private static HashMap<User, Transaction> transactionList = new HashMap<>();
-    private static LinkedList<Category> categoryList = new LinkedList<>();
-    private static HashMap<User, Category> userDefinedCategoryList = new HashMap<>();
-    private static LinkedList<BudgetType> budgetTypeList = new LinkedList<>();
+    private static final LinkedList<User> userList = new LinkedList<>();
+    private static final HashMap<User, Transaction> transactionList = new HashMap<>();
+    private static final LinkedList<Category> categoryList = new LinkedList<>();
+    private static final HashMap<User, Category> userDefinedCategoryList = new HashMap<>();
+    private static final LinkedList<BudgetType> budgetTypeList = new LinkedList<>();
 
     /**
      * DummyDataBaseController constructor of the {@link DummyDataBase} class
