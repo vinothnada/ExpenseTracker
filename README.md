@@ -1,5 +1,7 @@
 [![Issues](https://github.com/asirihewage/pyChatGPT-intl/actions/workflows/pylint.yml/badge.svg?event=issues)](https://github.com/asirihewage/pyChatGPT-intl/actions/workflows/pylint.yml)
 [![Upload Python Package](https://github.com/asirihewage/pyChatGPT-intl/actions/workflows/python-publish.yml/badge.svg)](https://github.com/asirihewage/pyChatGPT-intl/actions/workflows/python-publish.yml)
+![Version](https://img.shields.io/github/package-json/v/asirihewage/chatgpt-intl)
+![Package Size](https://img.shields.io/github/languages/code-size/asirihewage/chatGPT-intl)
 
 # ExpenseTracker
 The expense tracking and budgeting application.
